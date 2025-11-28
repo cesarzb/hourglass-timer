@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/style.css" rel="stylesheet" />
+    <title>hourglass</title>
+  </head>
+  <body class="h-screen w-screen flex items-center justify-center bg-black">
+    <div class="relative top-[0%] left-[0%]">
+      <div
+        id="hourglass"
+        class="w-100 h-200 flex flex-col items-center justify-center"
+      >
+        <div
+          class="w-50 h-40 rounded-b-full border-8 border-white box-border"
+        ></div>
+        <div class="fixed w-12 h-4 -mt-2 -ml-6 top-[50%] left-[50%] bg-white">
+          <div class="bg-black w-6 h-8 ml-3 -mt-2"></div>
+        </div>
+        <div
+          class="w-50 h-40 rounded-t-full border-8 border-white box-border"
+        ></div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
