@@ -6,7 +6,9 @@
     <link href="/src/style.css" rel="stylesheet" />
     <title>hourglass</title>
   </head>
-  <body class="h-screen w-screen flex items-center justify-center bg-black">
+  <body
+    class="h-screen w-screen flex flex-col items-center justify-center bg-black"
+  >
     <div class="relative top-[0%] left-[0%]">
       <div
         id="hourglass"
@@ -22,6 +24,10 @@
           class="w-50 h-40 rounded-t-full border-8 border-white box-border"
         ></div>
       </div>
+    </div>
+    <div class="text-white p-4 m-4 text-4xl">25:00</div>
+    <div class="text-white border-white border-4 p-4 m-4" id="start-button">
+      Start Timer
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
