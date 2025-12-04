@@ -10,13 +10,16 @@ if (startButton) {
     switch (timerState) {
       case "idle":
         startTimer();
+        changeButtonText("Stop Timer");
         break;
       case "running":
         stopTimer();
+        changeButtonText("Start Timer");
         break;
       case "finished":
         time = 25 * 60;
         startTimer();
+        changeButtonText("Stop Timer");
         break;
     }
   };
@@ -31,9 +34,7 @@ function showTime(time: number): string {
 }
 
 function startTimer(): void {
-  if (intervalId && timerState === "running") return;
-
-  intervalId = window.setInterval(() => {
+  intervalId = window.setInterval((): void => {
     time -= 1;
 
     if (timeLeftText) {
@@ -55,4 +56,10 @@ function startTimer(): void {
 function stopTimer(): void {
   window.clearInterval(intervalId);
   timerState = "idle";
+}
+
+function changeButtonText(content: string): void {
+  if (startButton) {
+    startButton.innerText = content;
+  }
 }
