@@ -14,14 +14,27 @@
       class="w-100 h-100 flex flex-col items-center justify-center relative"
     >
       <div
-        class="w-50 h-40 rounded-b-full border-8 border-white box-border"
-      ></div>
+        class="w-50 h-40 rounded-b-full border-8 border-white box-border overflow-hidden flex items-end"
+      >
+        <div
+          class="z-2 w-full bg-yellow-500"
+          id="top-sand"
+          style="height: 100px"
+        ></div>
+      </div>
+
+      <div
+        class="w-50 h-40 rounded-t-full border-8 border-white box-border overflow-hidden flex items-end"
+      >
+        <div
+          class="z-2 w-full bg-yellow-500"
+          id="bottom-sand"
+          style="height: 0px"
+        ></div>
+      </div>
       <div class="absolute w-12 h-4 -mt-2 -ml-6 top-[50%] left-[50%] bg-white">
         <div class="bg-black w-6 h-8 ml-3 -mt-2"></div>
       </div>
-      <div
-        class="w-50 h-40 rounded-t-full border-8 border-white box-border"
-      ></div>
     </div>
     <div class="text-white p-4 m-4 text-4xl time-left-text">25:00</div>
     <div

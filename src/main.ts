@@ -1,5 +1,7 @@
 const startButton = document.getElementById("start-button");
 const timeLeftText = document.querySelectorAll<HTMLElement>(".time-left-text");
+const topSand = document.getElementById("top-sand");
+const bottomSand = document.getElementById("bottom-sand");
 
 let intervalId: number | undefined;
 let time = 25 * 60;
@@ -18,6 +20,7 @@ if (startButton) {
         break;
       case "finished":
         time = 25 * 60;
+        progressSand();
         startTimer();
         changeButtonText("Stop Timer");
         break;
@@ -36,6 +39,7 @@ function showTime(time: number): string {
 function startTimer(): void {
   intervalId = window.setInterval((): void => {
     time -= 1;
+    progressSand();
 
     if (timeLeftText) {
       timeLeftText.forEach((element: HTMLElement): void => {
@@ -46,6 +50,7 @@ function startTimer(): void {
     if (time == 0) {
       window.clearInterval(intervalId);
       timerState = "finished";
+      changeButtonText("Restart Timer");
       intervalId = undefined;
     }
   }, 1000);
@@ -61,5 +66,12 @@ function stopTimer(): void {
 function changeButtonText(content: string): void {
   if (startButton) {
     startButton.innerText = content;
+  }
+}
+
+function progressSand(): void {
+  if (topSand && bottomSand) {
+    topSand.style.height = `${time / 15}px`;
+    bottomSand.style.height = `${100 - time / 15}px`;
   }
 }
