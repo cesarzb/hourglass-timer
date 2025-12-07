@@ -9,6 +9,9 @@ let timerState: "running" | "idle" | "finished" = "idle";
 
 if (startButton) {
   startButton.onclick = (): void => {
+    if (Notification.permission !== "granted") {
+      requestNotificationPermission();
+    }
     switch (timerState) {
       case "idle":
         startTimer();
@@ -52,6 +55,7 @@ function startTimer(): void {
       timerState = "finished";
       changeButtonText("Restart Timer");
       intervalId = undefined;
+      notifyAboutFinish();
     }
   }, 1000);
 
@@ -73,5 +77,25 @@ function progressSand(): void {
   if (topSand && bottomSand) {
     topSand.style.height = `${time / 15}px`;
     bottomSand.style.height = `${100 - time / 15}px`;
+  }
+}
+
+function notifyAboutFinish(): void {
+  if (!("Notification" in window)) {
+    alert("This browser doesn't support notifications!");
+  } else if (Notification.permission == "granted") {
+    new Notification("Hourglass finished!");
+  } else if (Notification.permission !== "denied") {
+    requestNotificationPermission("Hourglass finished!");
+  }
+}
+
+function requestNotificationPermission(notificationText?: string) {
+  if (Notification.permission !== "denied") {
+    Notification.requestPermission().then((): void => {
+      if (notificationText) {
+        new Notification(notificationText);
+      }
+    });
   }
 }
