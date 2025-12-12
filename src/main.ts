@@ -1,10 +1,12 @@
 const startButton = document.getElementById("start-button");
+const resetButton = document.getElementById("reset-button");
 const timeLeftText = document.querySelectorAll<HTMLElement>(".time-left-text");
 const topSand = document.getElementById("top-sand");
 const bottomSand = document.getElementById("bottom-sand");
+const countdownTime = 25 * 60;
 
 let intervalId: number | undefined;
-let time = 25 * 60;
+let time = countdownTime;
 let timerState: "running" | "idle" | "finished" = "idle";
 
 if (startButton) {
@@ -22,12 +24,21 @@ if (startButton) {
         changeButtonText("Start Timer");
         break;
       case "finished":
-        time = 25 * 60;
-        progressSand();
+        time = countdownTime;
+        progressFeedback();
         startTimer();
         changeButtonText("Stop Timer");
         break;
     }
+  };
+}
+
+if (resetButton) {
+  resetButton.onclick = (): void => {
+    stopTimer();
+    time = countdownTime;
+    changeButtonText("Start Timer");
+    progressFeedback();
   };
 }
 
@@ -42,13 +53,7 @@ function showTime(time: number): string {
 function startTimer(): void {
   intervalId = window.setInterval((): void => {
     time -= 1;
-    progressSand();
-
-    if (timeLeftText) {
-      timeLeftText.forEach((element: HTMLElement): void => {
-        element.innerText = showTime(time);
-      });
-    }
+    progressFeedback();
 
     if (time == 0) {
       window.clearInterval(intervalId);
@@ -73,7 +78,12 @@ function changeButtonText(content: string): void {
   }
 }
 
-function progressSand(): void {
+function progressFeedback(): void {
+  if (timeLeftText) {
+    timeLeftText.forEach((element: HTMLElement): void => {
+      element.innerText = showTime(time);
+    });
+  }
   if (topSand && bottomSand) {
     topSand.style.height = `${time / 15}px`;
     bottomSand.style.height = `${100 - time / 15}px`;
