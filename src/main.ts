@@ -3,10 +3,15 @@ const resetButton = document.getElementById("reset-button");
 const timeLeftText = document.querySelectorAll<HTMLElement>(".time-left-text");
 const topSand = document.getElementById("top-sand");
 const bottomSand = document.getElementById("bottom-sand");
-const countdownTime = 25 * 60;
+const fullCountdownTime = 25 * 60;
 
 let intervalId: number | undefined;
-let time = countdownTime;
+let time = fullCountdownTime;
+
+if (localStorage.getItem("timeLeft")) {
+  time = Number(localStorage.getItem("timeLeft"));
+}
+progressFeedback();
 let timerState: "running" | "idle" | "finished" = "idle";
 
 if (startButton) {
@@ -24,7 +29,8 @@ if (startButton) {
         changeButtonText("Start Timer");
         break;
       case "finished":
-        time = countdownTime;
+        time = fullCountdownTime;
+        saveTimeToStorage(time);
         progressFeedback();
         startTimer();
         changeButtonText("Stop Timer");
@@ -36,7 +42,8 @@ if (startButton) {
 if (resetButton) {
   resetButton.onclick = (): void => {
     stopTimer();
-    time = countdownTime;
+    time = fullCountdownTime;
+    saveTimeToStorage(time);
     changeButtonText("Start Timer");
     progressFeedback();
   };
@@ -53,6 +60,7 @@ function showTime(time: number): string {
 function startTimer(): void {
   intervalId = window.setInterval((): void => {
     time -= 1;
+    saveTimeToStorage(time);
     progressFeedback();
 
     if (time == 0) {
@@ -108,4 +116,9 @@ function requestNotificationPermission(notificationText?: string) {
       }
     });
   }
+}
+
+function saveTimeToStorage(value: number) {
+  console.log("Saved to storage");
+  localStorage.setItem("timeLeft", String(value));
 }
