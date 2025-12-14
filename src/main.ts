@@ -106,6 +106,12 @@ function notifyAboutFinish(): void {
   } else if (Notification.permission !== "denied") {
     requestNotificationPermission("Hourglass finished!");
   }
+
+  const notificationSound = new Audio("chime_sound.wav");
+
+  notificationSound.play().catch((error) => {
+    console.error("Autoplay blocked:", error);
+  });
 }
 
 function requestNotificationPermission(notificationText?: string) {
