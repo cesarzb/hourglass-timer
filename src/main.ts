@@ -2,7 +2,9 @@ import chimeUrl from "/chime_sound.wav";
 
 const startButton = document.getElementById("start-button");
 const resetButton = document.getElementById("reset-button");
-const timeLeftText = document.querySelectorAll<HTMLElement>(".time-left-text");
+const timeLeftInput =
+  document.querySelector<HTMLInputElement>("#time-left-input");
+const timeLeftTitle = document.querySelector<HTMLElement>("#time-left-title");
 const topSand = document.getElementById("top-sand");
 const bottomSand = document.getElementById("bottom-sand");
 const fullCountdownTime = 5;
@@ -89,11 +91,14 @@ function changeButtonText(content: string): void {
 }
 
 function progressFeedback(): void {
-  if (timeLeftText) {
-    timeLeftText.forEach((element: HTMLElement): void => {
-      element.innerText = showTime(time);
-    });
+  if (timeLeftTitle) {
+    timeLeftTitle.innerHTML = showTime(time);
   }
+
+  if (timeLeftInput) {
+    timeLeftInput.value = showTime(time);
+  }
+
   if (topSand && bottomSand) {
     topSand.style.height = `${time / 15}px`;
     bottomSand.style.height = `${100 - time / 15}px`;

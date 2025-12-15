@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/src/style.css" rel="stylesheet" />
-    <title class="time-left-text">Hourglass</title>
+    <title class="time-left-title">Hourglass</title>
     <link rel="icon" type="image/svg+xml" href="/hourglass.svg" />
   </head>
   <body
@@ -37,7 +37,10 @@
         <div class="bg-stone-900 w-6 h-8 ml-3 -mt-2"></div>
       </div>
     </div>
-    <div class="text-white p-4 m-4 text-4xl time-left-text">25:00</div>
+    <input type="text" id="time-left-input" 
+      class="text-white p-4 m-4 text-4xl bg-transparent border-none outline-none focus:ring-0 p-0 text-center w-full" 
+      value="25:00">
+    </input>
     <div
       class="text-white border-white border-4 p-4 m-4 w-40 flex justify-center items-center cursor-pointer"
       id="start-button"
