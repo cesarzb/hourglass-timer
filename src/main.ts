@@ -1,9 +1,11 @@
+import chimeUrl from "/chime_sound.wav";
+
 const startButton = document.getElementById("start-button");
 const resetButton = document.getElementById("reset-button");
 const timeLeftText = document.querySelectorAll<HTMLElement>(".time-left-text");
 const topSand = document.getElementById("top-sand");
 const bottomSand = document.getElementById("bottom-sand");
-const fullCountdownTime = 25 * 60;
+const fullCountdownTime = 5;
 
 let intervalId: number | undefined;
 let time = fullCountdownTime;
@@ -107,7 +109,7 @@ function notifyAboutFinish(): void {
     requestNotificationPermission("Hourglass finished!");
   }
 
-  const notificationSound = new Audio("chime_sound.wav");
+  const notificationSound = new Audio(chimeUrl);
 
   notificationSound.play().catch((error) => {
     console.error("Autoplay blocked:", error);
