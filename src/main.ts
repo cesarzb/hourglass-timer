@@ -92,7 +92,7 @@ function changeButtonText(content: string): void {
 
 function progressFeedback(): void {
   if (timeLeftTitle) {
-    timeLeftTitle.innerHTML = showTime(time);
+    timeLeftTitle.innerText = showTime(time);
   }
 
   if (timeLeftInput) {
