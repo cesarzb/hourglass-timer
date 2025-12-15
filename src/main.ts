@@ -7,7 +7,7 @@ const timeLeftInput =
 const timeLeftTitle = document.querySelector<HTMLElement>("#time-left-title");
 const topSand = document.getElementById("top-sand");
 const bottomSand = document.getElementById("bottom-sand");
-const fullCountdownTime = 5;
+const fullCountdownTime = 25 * 60;
 
 let intervalId: number | undefined;
 let time = fullCountdownTime;
