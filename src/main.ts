@@ -1,4 +1,5 @@
 import chimeUrl from "/chime_sound.wav";
+import buttonUrl from "/button_click.wav";
 
 const startButton = document.getElementById("start-button");
 const resetButton = document.getElementById("reset-button");
@@ -20,6 +21,7 @@ let timerState: "running" | "idle" | "finished" = "idle";
 
 if (startButton) {
   startButton.onclick = (): void => {
+    playAudio("button");
     if (Notification.permission !== "granted") {
       requestNotificationPermission();
     }
@@ -45,6 +47,7 @@ if (startButton) {
 
 if (resetButton) {
   resetButton.onclick = (): void => {
+    playAudio("button");
     stopTimer();
     time = fullCountdownTime;
     saveTimeToStorage(time);
@@ -114,11 +117,7 @@ function notifyAboutFinish(): void {
     requestNotificationPermission("Hourglass finished!");
   }
 
-  const notificationSound = new Audio(chimeUrl);
-
-  notificationSound.play().catch((error) => {
-    console.error("Autoplay blocked:", error);
-  });
+  playAudio("chime");
 }
 
 function requestNotificationPermission(notificationText?: string) {
@@ -135,3 +134,23 @@ function saveTimeToStorage(value: number) {
   console.log("Saved to storage");
   localStorage.setItem("timeLeft", String(value));
 }
+
+const playAudio = (type: string): void => {
+  let soundPath = "";
+  let volume = 1.0;
+  switch (type) {
+    case "chime":
+      soundPath = chimeUrl;
+      break;
+    case "button":
+      soundPath = buttonUrl;
+      volume = 0.2;
+      break;
+  }
+
+  const notificationSound = new Audio(soundPath);
+  notificationSound.volume = volume;
+  notificationSound.play().catch((error) => {
+    console.error("Autoplay blocked:", error);
+  });
+};
