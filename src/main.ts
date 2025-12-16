@@ -141,6 +141,7 @@ const playAudio = (type: string): void => {
   switch (type) {
     case "chime":
       soundPath = chimeUrl;
+      volume = 0.7;
       break;
     case "button":
       soundPath = buttonUrl;
