@@ -8,16 +8,20 @@ const timeLeftInput =
 const timeLeftTitle = document.querySelector<HTMLElement>("#time-left-title");
 const topSand = document.getElementById("top-sand");
 const bottomSand = document.getElementById("bottom-sand");
-const fullCountdownTime = 25 * 60;
+const defaultCountdownTime = 25 * 60;
+const inputFormat = /^\d{1,2}:\d{2}$/;
 
 let intervalId: number | undefined;
-let time = fullCountdownTime;
+let time = defaultCountdownTime;
 
+let timerState: "running" | "idle" | "finished" = "idle";
 if (localStorage.getItem("timeLeft")) {
   time = Number(localStorage.getItem("timeLeft"));
 }
+
+let startingCountdownTime = time;
+
 progressFeedback();
-let timerState: "running" | "idle" | "finished" = "idle";
 
 if (startButton) {
   startButton.onclick = (): void => {
@@ -35,7 +39,7 @@ if (startButton) {
         changeButtonText("Start Timer");
         break;
       case "finished":
-        time = fullCountdownTime;
+        time = startingCountdownTime;
         saveTimeToStorage(time);
         progressFeedback();
         startTimer();
@@ -49,10 +53,27 @@ if (resetButton) {
   resetButton.onclick = (): void => {
     playAudio("button");
     stopTimer();
-    time = fullCountdownTime;
+    time = startingCountdownTime;
     saveTimeToStorage(time);
     changeButtonText("Start Timer");
     progressFeedback();
+  };
+}
+
+if (timeLeftInput) {
+  timeLeftInput.onchange = (): void => {
+    if (inputFormat.test(timeLeftInput.value)) {
+      timeLeftInput.classList.remove("text-red-900");
+      timeLeftInput.classList.add("text-white");
+
+      const [minutes, seconds] = timeLeftInput.value.split(":");
+      startingCountdownTime = Number(minutes) * 60 + Number(seconds);
+      time = startingCountdownTime;
+    } else {
+      timeLeftInput.classList.remove("text-white");
+      timeLeftInput.classList.add("text-red-900");
+      time = defaultCountdownTime;
+    }
   };
 }
 
