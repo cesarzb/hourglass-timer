@@ -2,10 +2,7 @@ import chimeUrl from "/chime_sound.wav";
 import buttonUrl from "/button_click.wav";
 
 const startButton = document.getElementById("start-button");
-const resetToFiveButton = document.getElementById("reset-to-five-button");
-const resetToTwentyFiveButton = document.getElementById(
-  "reset-to-twenty-five-button",
-);
+const resetButtons = document.querySelectorAll<HTMLElement>(".reset-button");
 const timeLeftInput =
   document.querySelector<HTMLInputElement>("#time-left-input");
 const timeLeftTitle = document.querySelector<HTMLElement>("#time-left-title");
@@ -52,27 +49,19 @@ if (startButton) {
   };
 }
 
-// TODO: make shared class for both buttons, and store time in data attributes
-if (resetToFiveButton) {
-  resetToFiveButton.onclick = (): void => {
-    playAudio("button");
-    stopTimer();
-    time = 5 * 60;
-    saveTimeToStorage(time);
-    changeButtonText("Start Timer");
-    progressFeedback();
-  };
-}
-
-if (resetToTwentyFiveButton) {
-  resetToTwentyFiveButton.onclick = (): void => {
-    playAudio("button");
-    stopTimer();
-    time = 25 * 60;
-    saveTimeToStorage(time);
-    changeButtonText("Start Timer");
-    progressFeedback();
-  };
+if (resetButtons) {
+  resetButtons.forEach((button: HTMLElement): void => {
+    button.onclick = (): void => {
+      playAudio("button");
+      stopTimer();
+      if (button.dataset.time) {
+        time = Number(button.dataset.time) * 60;
+      }
+      saveTimeToStorage(time);
+      changeButtonText("Start Timer");
+      progressFeedback();
+    };
+  });
 }
 
 if (timeLeftInput) {
